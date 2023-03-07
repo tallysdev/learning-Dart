@@ -1,13 +1,13 @@
-abstract class Lab {
+class Lab {
   String name;
-  int colaboradores;
+  int collaborators;
   List<String> projects = [];
 
-  Lab(this.name, this.colaboradores, List<String> projects);
+  Lab(this.name, this.collaborators, List<String> this.projects);
 
   getName() => this.name;
 
-  getCollaborators() => this.colaboradores;
+  getCollaborators() => this.collaborators;
 
   getProjects() => this.projects;
 
@@ -16,31 +16,26 @@ abstract class Lab {
   }
 
   setUpdateCollaboradores(int collaboradores) {
-    return this.colaboradores = colaboradores;
+    return this.collaborators = collaborators;
   }
 
   setUpdateProjects(List<String> projects) {
     return this.projects = projects;
   }
 
-  SetPutProjects(String proje) {
+  setPutProjects(String proje) {
     this.projects.add(proje);
   }
 
   @override
   String toString() {
     // TODO: implement toString
-    return 'Lab{name: $name, colaboradores: $colaboradores, projects: ${projects.join(', ')}}';
+    return 'Lab{name: $name, collaborators: $collaborators, projects: ${projects.join(', ')}}';
   }
 }
 
-class LabContructor extends Lab {
-  LabContructor(String name, int colaboradores, List<String> project)
-      : super(name, colaboradores, project);
-}
-
 void main(List<String> args) {
-  var labican = LabContructor(
+  var labican = Lab(
       "Labican", 30, ['TI nas escolas', 'Pensamento computacional']);
   print(labican);
 }
