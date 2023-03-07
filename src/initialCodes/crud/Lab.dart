@@ -23,22 +23,24 @@ abstract class Lab {
     return this.projects = projects;
   }
 
+  SetPutProjects(String proje) {
+    this.projects.add(proje);
+  }
+
   @override
   String toString() {
     // TODO: implement toString
-    return 'Lab{name: $name, colaboradores: $colaboradores, projects: $projects}';
+    return 'Lab{name: $name, colaboradores: $colaboradores, projects: ${projects.join(', ')}}';
   }
 }
 
 class LabContructor extends Lab {
   LabContructor(String name, int colaboradores, List<String> project)
-      : super(name, colaboradores, project) {
-    this.projects = projects;
-  }
+      : super(name, colaboradores, project);
 }
 
 void main(List<String> args) {
   var labican = LabContructor(
-      "Labican", 30, ["TI nas escolas", "Pensamento computacional"]);
+      "Labican", 30, ['TI nas escolas', 'Pensamento computacional']);
   print(labican);
 }
