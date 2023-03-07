@@ -11,6 +11,18 @@ abstract class Lab {
 
   getProjects() => this.projects;
 
+  setUpdateName(String name) {
+    return this.name = name;
+  }
+
+  setUpdateCollaboradores(int collaboradores) {
+    return this.colaboradores = colaboradores;
+  }
+
+  setUpdateProjects(List<String> projects) {
+    return this.projects = projects;
+  }
+
   @override
   String toString() {
     // TODO: implement toString
@@ -29,5 +41,4 @@ void main(List<String> args) {
   var labican = LabContructor(
       "Labican", 30, ["TI nas escolas", "Pensamento computacional"]);
   print(labican);
-  labican.getName();
 }
