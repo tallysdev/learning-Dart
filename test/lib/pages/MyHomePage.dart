@@ -12,9 +12,26 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Nubank")
+        title: const  Text("Nubank")
         ),
-        body: const SingleChildScrollView(child: Center(child: Text("Area de cadastro"))),
+        body: const SingleChildScrollView(child: Center(child: Text("Area de cadastro"))
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.attach_money),
+            label: 'Money',
+          ),
+        ],
+      ),
     );
   }
 }
