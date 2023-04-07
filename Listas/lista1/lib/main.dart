@@ -8,14 +8,30 @@ void main(List<String> args) {
     ),
     home: Scaffold(
         appBar: AppBar(title: const Text("Meu app")),
-        body: Center(
-            child: Column(
+        body: SingleChildScrollView(
+            child: Center(
+                child: Column(
           children: const [
-            Text("Primeira Area"),
-            Text("Segunda Area"),
-            Text("Terceira Area")
+            SizedBox(
+                width: 150,
+                height: 150,
+                child: Image(
+                    image: NetworkImage(
+                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6086.png"))),
+            SizedBox(
+                width: 125,
+                height: 125,
+                child: Image(
+                    image: NetworkImage(
+                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6086.png"))),
+            SizedBox(
+                width: 100,
+                height: 100,
+                child: Image(
+                    image: NetworkImage(
+                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6086.png"))),
           ],
-        )),
+        ))),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
