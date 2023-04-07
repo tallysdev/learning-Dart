@@ -2,27 +2,18 @@ import 'package:flutter/material.dart';
 
 void main(List<String> args) {
   MaterialApp app = MaterialApp(
-    theme: ThemeData.dark(),
+    theme: ThemeData(
+      fontFamily: 'Bebas Neue',
+      colorScheme: const ColorScheme.dark(),
+    ),
     home: Scaffold(
         appBar: AppBar(title: const Text("Meu app")),
         body: Center(
             child: Column(
           children: const [
-            Text("Primeira Area",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Roboto")),
-            Text("Segunda Area",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Roboto")),
-            Text("Terceira Area",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Roboto"))
+            Text("Primeira Area"),
+            Text("Segunda Area"),
+            Text("Terceira Area")
           ],
         )),
         bottomNavigationBar: BottomNavigationBar(
