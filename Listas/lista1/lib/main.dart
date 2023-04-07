@@ -15,19 +15,25 @@ void main(List<String> args) {
             SizedBox(
                 width: 150,
                 height: 150,
-                child: Image(
+                child: FadeInImage(
+                    placeholder: NetworkImage(
+                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6086.png"),
                     image: NetworkImage(
                         "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6086.png"))),
             SizedBox(
                 width: 125,
                 height: 125,
-                child: Image(
+                child: FadeInImage(
+                    placeholder: NetworkImage(
+                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6086.png"),
                     image: NetworkImage(
                         "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6086.png"))),
             SizedBox(
                 width: 100,
                 height: 100,
-                child: Image(
+                child: FadeInImage(
+                    placeholder: NetworkImage(
+                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6086.png"),
                     image: NetworkImage(
                         "https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/6086.png"))),
           ],
@@ -35,7 +41,7 @@ void main(List<String> args) {
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_sharp), label: "Home"),
+                icon: Icon(Icons.account_circle_sharp), label: "Right"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle_sharp), label: "Center"),
             BottomNavigationBarItem(
