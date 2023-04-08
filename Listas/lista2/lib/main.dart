@@ -4,9 +4,10 @@ void main() {
   MaterialApp app = MaterialApp(
       theme: ThemeData.dark(),
       home: Scaffold(
-        appBar: AppBar(title: const Text("Cervejas")),
+        appBar: AppBar(title: const Center( child: Text("Cervejas"))),
         body: SingleChildScrollView(
-            child: Center(child:(DataTable(
+                child: Center(
+                    child: (DataTable(
           columns: const [
             DataColumn(label: Text("Nome")),
             DataColumn(label: Text("Estilo")),
@@ -66,6 +67,3 @@ void main() {
 
   runApp(app);
 }
-
-
-// Tente acrescentar diversas outras linhas (invente os dados). O que acontece quando as informações não cabem mais na tela? Que tal fazer com que se possa deslizar pelos dados da tabela através do mouse ou de gesto com o dedo? É bem mais fácil do que parece e tem tudo a vem com a moral dessa receita. Ache uma caixa que saiba implementar essa funcionalidade (isso se chava scroll) e fabrique essa caixa colocando seu DataTable dentro dela. E só.
