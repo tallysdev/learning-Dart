@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-class CaixaDeIconesQueEuMesmoProgramei extends StatelessWidget {
-  CaixaDeIconesQueEuMesmoProgramei();
+class NewNavBar extends StatelessWidget {
+  NewNavBar();
+
+  void botaoFoiTocado(int index) {
+    print("Tocaram no botão $index");
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(items: const [
+    return BottomNavigationBar(onTap: botaoFoiTocado, items: const [
       BottomNavigationBarItem(
         label: "Cafés",
         icon: Icon(Icons.coffee_outlined),
@@ -17,23 +21,32 @@ class CaixaDeIconesQueEuMesmoProgramei extends StatelessWidget {
   }
 }
 
+class NewBody extends StatelessWidget {
+  NewBody();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: const [
+      Expanded(
+        child: Text("La Fin Du Monde - Bock - 65 ibu"),
+      ),
+      Expanded(
+        child: Text("Sapporo Premiume - Sour Ale - 54 ibu"),
+      ),
+      Expanded(
+        child: Text("Duvel - Pilsner - 82 ibu"),
+      )
+    ]);
+  }
+}
+
 void main() {
   MaterialApp app = MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      theme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(title: const Text("Dicas")),
-        body: Column(children: const [
-          Expanded(
-            child: Text("La Fin Du Monde - Bock - 65 ibu"),
-          ),
-          Expanded(
-            child: Text("Sapporo Premiume - Sour Ale - 54 ibu"),
-          ),
-          Expanded(
-            child: Text("Duvel - Pilsner - 82 ibu"),
-          )
-        ]),
-        bottomNavigationBar: CaixaDeIconesQueEuMesmoProgramei(),
+        body: NewBody(),
+        bottomNavigationBar: NewNavBar(),
       ));
 
   runApp(app);
