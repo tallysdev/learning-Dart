@@ -26,7 +26,8 @@ class NewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child:Column(children: const [
+    return Center(
+        child: Column(children: const [
       Expanded(
         child: Text("La Fin Du Monde - Bock - 65 ibu"),
       ),
@@ -50,20 +51,29 @@ class NewAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
     );
   }
-  
+
   @override
   // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 void main() {
-  MaterialApp app = MaterialApp(
-      theme: ThemeData.dark(),
-      home: Scaffold(
-        appBar: NewAppBar(),
-        body: NewBody(),
-        bottomNavigationBar: NewNavBar(),
-      ));
-
+  MyApp app = MyApp();
   runApp(app);
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    MaterialApp app = MaterialApp(
+        theme: ThemeData.dark(),
+        home: Scaffold(
+          appBar: NewAppBar(),
+          body: NewBody(),
+          bottomNavigationBar: NewNavBar(),
+        ));
+    return app;
+  }
 }
