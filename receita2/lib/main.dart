@@ -13,7 +13,6 @@ class NewNavBar extends StatelessWidget {
     return BottomNavigationBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.amber,
       currentIndex: selectedIndex,
       onTap: (int index) {
         Navigator.of(context).popUntil((route) => route.isFirst);
@@ -94,6 +93,7 @@ class _MyAppState extends State<MyApp> {
     _selectedIndex = widget.selectedIndex;
   }
 
+  @override
   Widget build(BuildContext context) {
     final List<Icon> icons = [
       const Icon(Icons.coffee_outlined),
