@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
             "Duvel - Pilsner - 82 ibu"
           ]),
           bottomNavigationBar: NewNavBar(objects: const [
-            Icon(Icons.abc),
-            Icon(Icons.ac_unit),
-            Icon(Icons.access_alarm)
+            Icon(Icons.air),
+            Icon(Icons.water),
+            Icon(Icons.fireplace)
           ]),
         ));
   }
