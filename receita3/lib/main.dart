@@ -21,29 +21,26 @@ class MyApp extends StatelessWidget {
             "Sapporo Premiume - Sour Ale - 54 ibu",
             "Duvel - Pilsner - 82 ibu"
           ]),
-          bottomNavigationBar: NewNavBar(),
+          bottomNavigationBar: NewNavBar(objects: const [
+            Icon(Icons.abc),
+            Icon(Icons.ac_unit),
+            Icon(Icons.access_alarm)
+          ]),
         ));
   }
 }
 
 class NewNavBar extends StatelessWidget {
-  NewNavBar();
-
-  void botaoFoiTocado(int index) {
-    print("Tocaram no botão $index");
-  }
+  List<Icon> objects;
+  NewNavBar({this.objects = const []});
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(onTap: botaoFoiTocado, items: const [
-      BottomNavigationBarItem(
-        label: "Cafés",
-        icon: Icon(Icons.coffee_outlined),
-      ),
-      BottomNavigationBarItem(
-          label: "Cervejas", icon: Icon(Icons.local_drink_outlined)),
-      BottomNavigationBarItem(label: "Nações", icon: Icon(Icons.flag_outlined))
-    ]);
+    return BottomNavigationBar(
+      items: objects
+          .map((e) => BottomNavigationBarItem(icon: e, label: "Itens"))
+          .toList(),
+    );
   }
 }
 
