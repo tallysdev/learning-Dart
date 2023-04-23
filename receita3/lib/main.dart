@@ -13,9 +13,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          appBar: AppBar(
-            title: const Text("Dicas"),
-          ),
+          appBar: const NewAppBar(),
           body: DataBodyWidget(objects: const [
             "La Fin Du Monde - Bock - 65 ibu",
             "Sapporo Premiume - Sour Ale - 54 ibu",
@@ -28,6 +26,53 @@ class MyApp extends StatelessWidget {
           ]),
         ));
   }
+}
+
+class NewAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const NewAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: const Text("Cervejas"),
+      actions: [
+          PopupMenuButton(
+          // add icon, by default "3 dot" icon
+          // icon: Icon(Icons.book)
+          itemBuilder: (context){
+            return [
+                  const PopupMenuItem<int>(
+                      value: 0,
+                      child: Icon(Icons.home),
+                  ),
+
+                  const PopupMenuItem<int>(
+                      value: 1,
+                      child: Icon(Icons.update),
+                  ),
+
+                  const PopupMenuItem<int>(
+                      value: 2,
+                      child: Icon(Icons.exit_to_app),
+                  ),
+              ];
+          },
+          onSelected:(value){
+            if(value == 0){
+                print("My account menu is selected.");
+            }else if(value == 1){
+                print("Settings menu is selected.");
+            }else if(value == 2){
+                print("Logout menu is selected.");
+            }
+          }
+        ),
+      ],
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class NewNavBar extends StatelessWidget {
