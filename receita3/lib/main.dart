@@ -43,17 +43,26 @@ class NewAppBar extends StatelessWidget implements PreferredSizeWidget {
             return [
                   const PopupMenuItem<int>(
                       value: 0,
-                      child: Icon(Icons.home),
+                      child:ListTile(
+                        leading: Icon(Icons.home),
+                        title: Text("Home"),
+                      ),
                   ),
 
                   const PopupMenuItem<int>(
                       value: 1,
-                      child: Icon(Icons.update),
+                      child: ListTile(
+                        leading: Icon(Icons.update),
+                        title: Text("Update"),
+                      ),
                   ),
 
                   const PopupMenuItem<int>(
                       value: 2,
-                      child: Icon(Icons.exit_to_app),
+                      child: ListTile(
+                        leading: Icon(Icons.exit_to_app),
+                        title: Text("Exit"),
+                      ),
                   ),
               ];
           },
