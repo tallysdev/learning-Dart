@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 var dataObjects = [
-  {"name": "La Fin Du Monde", "style": "Bock", "ibu": "65" },
-  {"name": "Sapporo Premiume", "style": "Sour Ale", "ibu": "54" },
-  {"name": "Sapporo Premiume", "style": "Sour Ale", "ibu": "54" },
-  {"name": "Duvel", "style": "Pilsner", "ibu": "82" },
-  {"name": "Sapporo Premiume", "style": "Sour Ale", "ibu": "54" },
-  {"name": "Duvel", "style": "Pilsner", "ibu": "82" },
-  {"name": "Sapporo Premiume", "style": "Sour Ale", "ibu": "54" },
-  {"name": "Duvel", "style": "Pilsner", "ibu": "82" },
-  {"name": "Sapporo Premiume", "style": "Sour Ale", "ibu": "54" },
-  {"name": "Duvel", "style": "Pilsner", "ibu": "82" },
-  {"name": "Duvel", "style": "Pilsner", "ibu": "82" }
+  {"name": "La Fin Du Monde", "style": "Bock", "ibu": "65"},
+  {"name": "Sapporo Premiume", "style": "Sour Ale", "ibu": "54"},
+  {"name": "Sapporo Premiume", "style": "Sour Ale", "ibu": "54"},
+  {"name": "Duvel", "style": "Pilsner", "ibu": "82"},
+  {"name": "Sapporo Premiume", "style": "Sour Ale", "ibu": "54"},
+  {"name": "Duvel", "style": "Pilsner", "ibu": "82"},
+  {"name": "Sapporo Premiume", "style": "Sour Ale", "ibu": "54"},
+  {"name": "Duvel", "style": "Pilsner", "ibu": "82"},
+  {"name": "Sapporo Premiume", "style": "Sour Ale", "ibu": "54"},
+  {"name": "Duvel", "style": "Pilsner", "ibu": "82"},
+  {"name": "Duvel", "style": "Pilsner", "ibu": "82"}
 ];
 
 void main() {
@@ -30,11 +30,7 @@ class MyApp extends StatelessWidget {
           appBar: AppBar(
             title: const Text("Dicas"),
           ),
-          body: ListView( 
-            children: <Widget>[
-              DataBodyWidget(objects: dataObjects)
-            ]
-          ),
+          body: MytileWidget(objects: dataObjects),
           bottomNavigationBar: NewNavBar(),
         ));
   }
@@ -61,31 +57,48 @@ class NewNavBar extends StatelessWidget {
   }
 }
 
-class DataBodyWidget extends StatelessWidget {
+// class DataBodyWidget extends StatelessWidget {
+//   List objects;
+
+//   DataBodyWidget({this.objects = const []});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     var columnNames = ["Nome", "Estilo", "IBU"],
+//         propertyNames = ["name", "style", "ibu"];
+
+//     return DataTable(
+//         columns: columnNames.map((name) => DataColumn(
+//                 label: Expanded(
+//                     child: Text(name,
+//                         style: const TextStyle(fontStyle: FontStyle.italic)))))
+//             .toList(),
+//         rows: objects
+//             .map((obj) => DataRow(
+//                 cells: propertyNames
+//                     .map((propName) => DataCell(Text(obj[propName])))
+//                     .toList()))
+//             .toList());
+//   }
+// }
+
+class MytileWidget extends StatelessWidget {
   List objects;
 
-  DataBodyWidget({this.objects = const []});
+  MytileWidget({this.objects = const []});
 
   @override
   Widget build(BuildContext context) {
-    var columnNames = ["Nome", "Estilo", "IBU"],
-        propertyNames = ["name", "style", "ibu"];
+    // var columnNames = ["Nome", "Estilo", "IBU"],
+    //     propertyNames = ["name", "style", "ibu"];
 
-    return DataTable(
-        columns: columnNames
-            .map((name) => DataColumn(
-                label: Expanded(
-                    child: Text(name,
-                        style: const TextStyle(fontStyle: FontStyle.italic)))))
-            .toList(),
-        rows: objects
-            .map((obj) => DataRow(
-                cells: propertyNames
-                    .map((propName) => DataCell(Text(obj[propName])))
-                    .toList()))
-            .toList());
+    return ListView(
+      children: [
+        for(var i in objects)
+          Card(child: ListTile(title: Text(i.toString())))
+      ]
+    );
   }
 }
-
 
 // Codigo baseado no templete inicial do professor Fabricio Vale
