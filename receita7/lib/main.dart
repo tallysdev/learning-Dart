@@ -5,9 +5,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class DataService {
   final ValueNotifier<List> tableStateNotifier = ValueNotifier([]);
+  final ValueNotifier<List<String>> columnNamesNotifier = ValueNotifier([]);
+  final ValueNotifier<List<String>> propertyNamesNotifier = ValueNotifier([]);
 
   void carregar(index) {
-    var res = null;
+    var res;
 
     if (index == 1) {
       res = carregarCervejas();
@@ -29,6 +31,16 @@ class DataService {
     var jsonString = await http.read(beersUri);
     var beersJson = jsonDecode(jsonString);
     tableStateNotifier.value = beersJson;
+    columnNamesNotifier.value = [
+      "Brand",
+      "Name",
+      "Style",
+    ];
+    propertyNamesNotifier.value = [
+      "brand",
+      "name",
+      "style",
+    ];
   }
 
 // https://random-data-api.com/api/coffee/random_coffee?size=5
@@ -42,6 +54,16 @@ class DataService {
     var jsonString = await http.read(coffesUri);
     var coffeesJson = jsonDecode(jsonString);
     tableStateNotifier.value = coffeesJson;
+    propertyNamesNotifier.value = [
+      "blend_name",
+      "origin",
+      "variety",
+    ];
+    columnNamesNotifier.value = [
+      "Blend_name",
+      "Origin",
+      "Variety",
+    ];
   }
 
 // https://random-data-api.com/api/nation/random_nation?size=5
@@ -52,9 +74,11 @@ class DataService {
         path: 'api/nation/random_nation',
         queryParameters: {'size': '5'});
 
-    var jsonNString = await http.read(nationsUri);
-    var nationsJson = jsonDecode(jsonNString);
+    var jsonString = await http.read(nationsUri);
+    var nationsJson = jsonDecode(jsonString);
     tableStateNotifier.value = nationsJson;
+    columnNamesNotifier.value = ["Nationality", "Language", "Capital"];
+    propertyNamesNotifier.value = ["nationality", "language", "capital"];
   }
 }
 
@@ -62,7 +86,7 @@ final dataService = DataService();
 
 void main() {
   MyApp app = const MyApp();
-
+  dataService.carregarCervejas();
   runApp(app);
 }
 
@@ -77,14 +101,12 @@ class MyApp extends StatelessWidget {
         home: Scaffold(
           appBar: AppBar(
             title: const Text("Dicas"),
+            
           ),
           body: ValueListenableBuilder(
               valueListenable: dataService.tableStateNotifier,
               builder: (_, value, __) {
-                return DataTableWidget(
-                    jsonObjects: value,
-                    propertyNames: const ["name", "style", "ibu"],
-                    columnNames: const ["Nome", "Estilo", "IBU"]);
+                return DataTableWidget(jsonObjects: value);
               }),
           bottomNavigationBar:
               NewNavBar(itemSelectedCallback: dataService.carregar),
@@ -95,12 +117,12 @@ class MyApp extends StatelessWidget {
 class NewNavBar extends HookWidget {
   final _itemSelectedCallback;
 
-  NewNavBar({super.key, itemSelectedCallback})
-      : _itemSelectedCallback = itemSelectedCallback ?? (int) {}
+  NewNavBar({itemSelectedCallback})
+      : _itemSelectedCallback = itemSelectedCallback ?? (int);
 
   @override
   Widget build(BuildContext context) {
-    var state = useState(2);
+    var state = useState(1);
 
     return BottomNavigationBar(
         onTap: (index) {
@@ -125,18 +147,12 @@ class NewNavBar extends HookWidget {
 class DataTableWidget extends StatelessWidget {
   final List jsonObjects;
 
-  final List<String> columnNames;
-
-  final List<String> propertyNames;
-
-  const DataTableWidget(
-      {super.key,
-      this.jsonObjects = const [],
-      this.columnNames = const ["Nome", "Estilo", "IBU"],
-      this.propertyNames = const ["name", "style", "ibu"]});
+  const DataTableWidget({super.key, this.jsonObjects = const []});
 
   @override
   Widget build(BuildContext context) {
+    final columnNames = dataService.columnNamesNotifier.value;
+    final propertyNames = dataService.propertyNamesNotifier.value;
     return DataTable(
         columns: columnNames
             .map((name) => DataColumn(
