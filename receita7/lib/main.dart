@@ -7,6 +7,15 @@ class DataService {
   final ValueNotifier<List> tableStateNotifier = ValueNotifier([]);
   final ValueNotifier<List<String>> columnNamesNotifier = ValueNotifier([]);
   final ValueNotifier<List<String>> propertyNamesNotifier = ValueNotifier([]);
+  late int zise = 5;
+
+  void zize10() {
+    zise = 10;
+  }
+
+  void zize15() {
+    zise = 15;
+  }
 
   void carregar(index) {
     var res;
@@ -26,7 +35,7 @@ class DataService {
         scheme: 'https',
         host: 'random-data-api.com',
         path: 'api/beer/random_beer',
-        queryParameters: {'size': '5'});
+        queryParameters: {'size': '$zise'});
 
     var jsonString = await http.read(beersUri);
     var beersJson = jsonDecode(jsonString);
@@ -49,7 +58,7 @@ class DataService {
         scheme: 'https',
         host: 'random-data-api.com',
         path: 'api/coffee/random_coffee',
-        queryParameters: {'size': '5'});
+        queryParameters: {'size': '$zise'});
 
     var jsonString = await http.read(coffesUri);
     var coffeesJson = jsonDecode(jsonString);
@@ -72,7 +81,7 @@ class DataService {
         scheme: 'https',
         host: 'random-data-api.com',
         path: 'api/nation/random_nation',
-        queryParameters: {'size': '5'});
+        queryParameters: {'size': '$zise'});
 
     var jsonString = await http.read(nationsUri);
     var nationsJson = jsonDecode(jsonString);
@@ -101,7 +110,23 @@ class MyApp extends StatelessWidget {
         home: Scaffold(
           appBar: AppBar(
             title: const Text("Dicas"),
-            
+            actions: [
+              PopupMenuButton<Text>(
+                itemBuilder: (context) {
+                  return [
+                    const PopupMenuItem(
+                      child: Text("5 Valores"),
+                    ),
+                    const PopupMenuItem(
+                      child: Text("10 Valores"),
+                    ),
+                    const PopupMenuItem(
+                      child: Text("15 Valores"),
+                    ),
+                  ];
+                },
+              )
+            ],
           ),
           body: ValueListenableBuilder(
               valueListenable: dataService.tableStateNotifier,
