@@ -9,14 +9,6 @@ class DataService {
   final ValueNotifier<List<String>> propertyNamesNotifier = ValueNotifier([]);
   late int zise = 5;
 
-  void zize10() {
-    zise = 10;
-  }
-
-  void zize15() {
-    zise = 15;
-  }
-
   void carregar(index) {
     var res;
 
@@ -93,6 +85,15 @@ class DataService {
 
 final dataService = DataService();
 
+enum linhas {
+  value5(5),
+  value10(10),
+  value15(15);
+
+  final int id;
+  const linhas(this.id);
+}
+
 void main() {
   MyApp app = const MyApp();
   dataService.carregarCervejas();
@@ -111,20 +112,25 @@ class MyApp extends StatelessWidget {
           appBar: AppBar(
             title: const Text("Dicas"),
             actions: [
-              PopupMenuButton<Text>(
-                itemBuilder: (context) {
-                  return [
-                    const PopupMenuItem(
+              PopupMenuButton<linhas>(
+                onSelected: (linhas linhas) {
+                  dataService.zise = linhas.id;
+                },
+                itemBuilder: (BuildContext context) => const [
+                    PopupMenuItem(
+                      // value: dataService.zize10().Actio,
+                      value: linhas.value5,
                       child: Text("5 Valores"),
                     ),
-                    const PopupMenuItem(
+                    PopupMenuItem(
+                      value: linhas.value10,
                       child: Text("10 Valores"),
                     ),
-                    const PopupMenuItem(
+                    PopupMenuItem(
+                      value: linhas.value15,
                       child: Text("15 Valores"),
                     ),
-                  ];
-                },
+                  ],
               )
             ],
           ),
