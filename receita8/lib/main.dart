@@ -9,7 +9,8 @@ import 'dart:convert';
 enum TableStatus { idle, loading, ready, error }
 
 class DataService {
-  final ValueNotifier<Map<String, dynamic>> tableStateNotifier = ValueNotifier({'status': TableStatus.idle, 'dataObjects': []});
+  final ValueNotifier<Map<String, dynamic>> tableStateNotifier =
+      ValueNotifier({'status': TableStatus.idle, 'dataObjects': []});
   final ValueNotifier<List<String>> columnNamesNotifier = ValueNotifier([]);
   final ValueNotifier<List<String>> propertyNamesNotifier = ValueNotifier([]);
 
@@ -124,21 +125,30 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
-            title: const Text("Dicas"),
+            title: const Text("Quintana EGC"),
           ),
           body: ValueListenableBuilder(
               valueListenable: dataService.tableStateNotifier,
               builder: (_, value, __) {
                 switch (value['status']) {
                   case TableStatus.idle:
-                    return const Text("Toque algum botão");
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.network(
+                              "https://i0.wp.com/quintanagastronomia.com.br/wp-content/uploads/2018/06/ecogastronomia-logo-branco.png?fit=500%2C200&ssl=1"),
+                          const SizedBox(height: 10),
+                          const Text("Escolha uma opção do cardapio nos botoes abaixo")
+                        ],
+                      ),
+                    );
 
                   case TableStatus.loading:
                     return const Center(child: CircularProgressIndicator());
 
                   case TableStatus.ready:
-                    return DataTableWidget(
-                        jsonObjects: value['dataObjects']);
+                    return DataTableWidget(jsonObjects: value['dataObjects']);
 
                   case TableStatus.error:
                     return const Text("Lascou");
