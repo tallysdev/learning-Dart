@@ -26,41 +26,47 @@ class DataService {
   }
 
   void carregarCoffees() {
-    var beersUri = Uri(
+    var coffeesUri = Uri(
         scheme: 'https',
         host: 'random-data-api.com',
         path: 'api/coffee/random_coffee',
         queryParameters: {'size': '5'});
 
-    http.read(beersUri).then((jsonString) {
-      var beersJson = jsonDecode(jsonString);
+      http.read(coffeesUri).then((jsonString) {
+        var beersJson = jsonDecode(jsonString);
 
-      tableStateNotifier.value = {
-        'status': TableStatus.ready,
-        'dataObjects': beersJson
+        tableStateNotifier.value = {
+          'status': TableStatus.ready,
+          'dataObjects': beersJson
+        };
+        propertyNamesNotifier.value = [
+          "blend_name",
+          "origin",
+          "variety",
+        ];
+        columnNamesNotifier.value = [
+          "Blend_name",
+          "Origin",
+          "Variety",
+        ];
+      }).catchError((err) {
+        tableStateNotifier.value = {
+        'status': TableStatus.error,
+        'dataObjects': []
       };
-      propertyNamesNotifier.value = [
-        "blend_name",
-        "origin",
-        "variety",
-      ];
-      columnNamesNotifier.value = [
-        "Blend_name",
-        "Origin",
-        "Variety",
-      ];
-    });
+      });
   }
 
-  Future<void> carregarFoods() async{
+  Future<void> carregarFoods() async {
     var foodsUri = Uri(
         scheme: 'https',
         host: 'random-data-api.com',
         path: 'api/food/random_food',
         queryParameters: {'size': '5'});
 
-    var jsonString = await http.read(foodsUri);
-    var foodsJson = jsonDecode(jsonString);
+    try {
+      var jsonString = await http.read(foodsUri);
+      var foodsJson = jsonDecode(jsonString);
 
       tableStateNotifier.value = {
         'status': TableStatus.ready,
@@ -76,8 +82,13 @@ class DataService {
         "Description",
         "Ingredient",
       ];
+    } catch (e) {
+      tableStateNotifier.value = {
+        'status': TableStatus.error,
+        'dataObjects': []
+      };
     }
-
+  }
 
   void carregarBeers() {
     var beersUri = Uri(
@@ -85,8 +96,8 @@ class DataService {
         host: 'random-data-api.com',
         path: 'api/beer/random_beer',
         queryParameters: {'size': '5'});
-
-    http.read(beersUri).then((jsonString) {
+      
+      http.read(beersUri).then((jsonString) {
       var beersJson = jsonDecode(jsonString);
 
       tableStateNotifier.value = {
@@ -103,7 +114,14 @@ class DataService {
         "name",
         "style",
       ];
+    }).catchError((err) {
+      tableStateNotifier.value = {
+        'status': TableStatus.error,
+        'dataObjects': []
+      };
     });
+
+      
   }
 }
 
@@ -139,7 +157,8 @@ class MyApp extends StatelessWidget {
                           Image.network(
                               "https://i0.wp.com/quintanagastronomia.com.br/wp-content/uploads/2018/06/ecogastronomia-logo-branco.png?fit=500%2C200&ssl=1"),
                           const SizedBox(height: 10),
-                          const Text("Escolha uma opção do cardapio nos botoes abaixo")
+                          const Text(
+                              "Escolha uma opção do cardapio nos botoes abaixo")
                         ],
                       ),
                     );
@@ -151,7 +170,7 @@ class MyApp extends StatelessWidget {
                     return DataTableWidget(jsonObjects: value['dataObjects']);
 
                   case TableStatus.error:
-                    return const Text("Lascou");
+                    return const Center(child: Text("Aconteceu um imprevisto, chame o DevOps"));
                 }
 
                 return const Text("...");
