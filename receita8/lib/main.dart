@@ -15,7 +15,7 @@ class DataService {
   final ValueNotifier<List<String>> propertyNamesNotifier = ValueNotifier([]);
 
   void carregar(index) {
-    final funcoes = [carregarCoffees, carregarBeers, carregarFoods];
+    final funcoes = [carregarCoffees, carregarBeers, carregarFoods,carregarCannabis];
 
     tableStateNotifier.value = {
       'status': TableStatus.loading,
@@ -32,29 +32,29 @@ class DataService {
         path: 'api/coffee/random_coffee',
         queryParameters: {'size': '5'});
 
-      http.read(coffeesUri).then((jsonString) {
-        var beersJson = jsonDecode(jsonString);
+    http.read(coffeesUri).then((jsonString) {
+      var beersJson = jsonDecode(jsonString);
 
-        tableStateNotifier.value = {
-          'status': TableStatus.ready,
-          'dataObjects': beersJson
-        };
-        propertyNamesNotifier.value = [
-          "blend_name",
-          "origin",
-          "variety",
-        ];
-        columnNamesNotifier.value = [
-          "Blend_name",
-          "Origin",
-          "Variety",
-        ];
-      }).catchError((err) {
-        tableStateNotifier.value = {
+      tableStateNotifier.value = {
+        'status': TableStatus.ready,
+        'dataObjects': beersJson
+      };
+      propertyNamesNotifier.value = [
+        "blend_name",
+        "origin",
+        "variety",
+      ];
+      columnNamesNotifier.value = [
+        "Blend_name",
+        "Origin",
+        "Variety",
+      ];
+    }).catchError((err) {
+      tableStateNotifier.value = {
         'status': TableStatus.error,
         'dataObjects': []
       };
-      });
+    });
   }
 
   Future<void> carregarFoods() async {
@@ -90,14 +90,37 @@ class DataService {
     }
   }
 
+  Future<void> carregarCannabis() async {
+    var cannabissUri = Uri(
+        scheme: 'https',
+        host: 'random-data-api.com',
+        path: 'api/cannabis/random_cannabis',
+        queryParameters: {'size': '5'});
+    try {
+      var jsonString = await http.read(cannabissUri);
+      var cannabissJson = jsonDecode(jsonString);
+      tableStateNotifier.value = {
+        'status': TableStatus.ready,
+        'dataObjects': cannabissJson
+      };
+      columnNamesNotifier.value = ["Strain", "Cannabinoid", "Terpene"];
+      propertyNamesNotifier.value = ["strain", "cannabinoid", "terpene"];
+    } catch (e) {
+      tableStateNotifier.value = {
+        'status': TableStatus.error,
+        'dataObjects': []
+      };
+    }
+  }
+
   void carregarBeers() {
     var beersUri = Uri(
         scheme: 'https',
         host: 'random-data-api.com',
         path: 'api/beer/random_beer',
         queryParameters: {'size': '5'});
-      
-      http.read(beersUri).then((jsonString) {
+
+    http.read(beersUri).then((jsonString) {
       var beersJson = jsonDecode(jsonString);
 
       tableStateNotifier.value = {
@@ -120,8 +143,6 @@ class DataService {
         'dataObjects': []
       };
     });
-
-      
   }
 }
 
@@ -170,7 +191,8 @@ class MyApp extends StatelessWidget {
                     return DataTableWidget(jsonObjects: value['dataObjects']);
 
                   case TableStatus.error:
-                    return const Center(child: Text("Aconteceu um imprevisto, chame o DevOps"));
+                    return const Center(
+                        child: Text("Aconteceu um imprevisto, chame o DevOps"));
                 }
 
                 return const Text("...");
@@ -193,6 +215,7 @@ class NewNavBar extends HookWidget {
     var state = useState(1);
 
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
         onTap: (index) {
           state.value = index;
 
@@ -207,7 +230,8 @@ class NewNavBar extends HookWidget {
           BottomNavigationBarItem(
               label: "Cervejas", icon: Icon(Icons.local_drink_outlined)),
           BottomNavigationBarItem(
-              label: "Comidas", icon: Icon(Icons.fastfood_outlined))
+              label: "Comidas", icon: Icon(Icons.flatware_rounded)),
+          BottomNavigationBarItem(label: "Naturais...", icon: Icon(Icons.smoking_rooms_rounded))
         ]);
   }
 }
