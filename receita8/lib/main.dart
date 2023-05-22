@@ -52,19 +52,19 @@ class DataService {
     });
   }
 
-  void carregarFoods() {
+  Future<void> carregarFoods() async{
     var foodsUri = Uri(
         scheme: 'https',
         host: 'random-data-api.com',
         path: 'api/food/random_food',
         queryParameters: {'size': '5'});
 
-    http.read(foodsUri).then((jsonString) {
-      var beersJson = jsonDecode(jsonString);
+    var jsonString = await http.read(foodsUri);
+    var foodsJson = jsonDecode(jsonString);
 
       tableStateNotifier.value = {
         'status': TableStatus.ready,
-        'dataObjects': beersJson,
+        'dataObjects': foodsJson
       };
       propertyNamesNotifier.value = [
         "dish",
@@ -76,8 +76,8 @@ class DataService {
         "Description",
         "Ingredient",
       ];
-    });
-  }
+    }
+
 
   void carregarBeers() {
     var beersUri = Uri(
