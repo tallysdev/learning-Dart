@@ -5,13 +5,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List itens = dataService.getvaluesofItens;
     return MaterialApp(
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(title: const Text("Dicas"), actions: [
             PopupMenuButton(
-              itemBuilder: (_) => [3, 7, 15]
+              itemBuilder: (_) => itens
                   .map((num) => PopupMenuItem(
                         value: num,
                         child: Text("Carregar $num itens por vez"),

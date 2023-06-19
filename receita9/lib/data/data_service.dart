@@ -10,19 +10,24 @@ enum ItemType { beer, coffee, nation, none }
 
 class DataService {
   static const MAX_N_ITEMS = 15;
-
   static const MIN_N_ITEMS = 3;
-
   static const DEFAULT_N_ITEMS = 7;
+  final List<int> _valuesOfItens = [MAX_N_ITEMS, DEFAULT_N_ITEMS, MIN_N_ITEMS];
+  get getvaluesofItens {
+    return _valuesOfItens;
+  }
 
   int _numberOfItems = DEFAULT_N_ITEMS;
-
   set numberOfItens(n) {
     _numberOfItems = n < 0
         ? MIN_N_ITEMS
         : n > MAX_N_ITEMS
             ? MAX_N_ITEMS
             : n;
+  }
+
+  get numberOfIntens {
+    return _numberOfItems;
   }
 
   void _recs(
@@ -58,10 +63,6 @@ class DataService {
         'itemType': type
       };
     }
-  }
-
-  get numberOfIntens {
-    return _numberOfItems;
   }
 
   final ValueNotifier<Map<String, dynamic>> tableStateNotifier = ValueNotifier({
