@@ -25,6 +25,15 @@ class DataService {
             : n;
   }
 
+  Uri _recs(String choose) {
+    var rec = Uri(
+        scheme: 'https',
+        host: 'random-data-api.com',
+        path: 'api/$choose',
+        queryParameters: {'size': '$_numberOfItems'});
+    return rec;
+  }
+
   get numberOfIntens {
     return _numberOfItems;
   }
@@ -53,12 +62,7 @@ class DataService {
         'itemType': ItemType.coffee
       };
     }
-
-    var coffeesUri = Uri(
-        scheme: 'https',
-        host: 'random-data-api.com',
-        path: 'api/coffee/random_coffee',
-        queryParameters: {'size': '$_numberOfItems'});
+    var coffeesUri = _recs("coffee/random_coffee");
 
     http.read(coffeesUri).then((jsonString) {
       var coffeesJson = jsonDecode(jsonString);
@@ -94,12 +98,7 @@ class DataService {
         'itemType': ItemType.nation
       };
     }
-
-    var nationsUri = Uri(
-        scheme: 'https',
-        host: 'random-data-api.com',
-        path: 'api/nation/random_nation',
-        queryParameters: {'size': '$_numberOfItems'});
+    var nationsUri = _recs("nation/random_nation");
 
     http.read(nationsUri).then((jsonString) {
       var nationsJson = jsonDecode(jsonString);
@@ -142,12 +141,7 @@ class DataService {
         'itemType': ItemType.beer
       };
     }
-
-    var beersUri = Uri(
-        scheme: 'https',
-        host: 'random-data-api.com',
-        path: 'api/beer/random_beer',
-        queryParameters: {'size': '$_numberOfItems'});
+    var beersUri = _recs("beer/random_beer");
 
     http.read(beersUri).then((jsonString) {
       var beersJson = jsonDecode(jsonString);
