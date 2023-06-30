@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
@@ -61,7 +62,8 @@ class DataService {
 
     carregarPorTipo(params[index]);
   }
-void ordenarEstadoAtual(String propriedade) {
+
+  void ordenarEstadoAtual(String propriedade) {
     List objetos = tableStateNotifier.value['dataObjects'] ?? [];
 
     if (objetos == []) return;
@@ -73,11 +75,28 @@ void ordenarEstadoAtual(String propriedade) {
     final type = tableStateNotifier.value['itemType'];
 
     if (type == ItemType.beer && propriedade == "name") {
-      objetosOrdenados = ord.ordenarCervejasPorNomeCrescente(objetos);
+      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
     } else if (type == ItemType.beer && propriedade == "style") {
-      objetosOrdenados = ord.ordenarCervejasPorEstiloCrescente(objetos);
+      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
+    } else if (type == ItemType.beer && propriedade == "ibu") {
+      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
+    } else if (type == ItemType.coffee && propriedade == "blend_name") {
+      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
+    } else if (type == ItemType.coffee && propriedade == "origin") {
+      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
+    } else if (type == ItemType.coffee && propriedade == "variety") {
+      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
+    } else if (type == ItemType.nation && propriedade == "nationality") {
+      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
+    } else if (type == ItemType.nation && propriedade == "capital") {
+      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
+    } else if (type == ItemType.nation && propriedade == "language") {
+      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
+    }else if (type == ItemType.nation && propriedade == "national_sport") {
+      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
+    } else {
+      print("vish");
     }
-
     emitirEstadoOrdenado(objetosOrdenados, propriedade);
   }
 
@@ -102,7 +121,7 @@ void ordenarEstadoAtual(String propriedade) {
   void emitirEstadoOrdenado(List objetosOrdenados, String propriedade) {
     // var estado = tableStateNotifier.value;
     var estado = Map<String, dynamic>.from(tableStateNotifier.value);
-    
+
     estado['dataObjects'] = objetosOrdenados;
 
     estado['sortCriteria'] = propriedade;
