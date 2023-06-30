@@ -65,38 +65,10 @@ class DataService {
 
   void ordenarEstadoAtual(String propriedade) {
     List objetos = tableStateNotifier.value['dataObjects'] ?? [];
-
     if (objetos == []) return;
-
     Ordenador ord = Ordenador();
-
     var objetosOrdenados = [];
-
-    final type = tableStateNotifier.value['itemType'];
-
-    if (type == ItemType.beer && propriedade == "name") {
-      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
-    } else if (type == ItemType.beer && propriedade == "style") {
-      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
-    } else if (type == ItemType.beer && propriedade == "ibu") {
-      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
-    } else if (type == ItemType.coffee && propriedade == "blend_name") {
-      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
-    } else if (type == ItemType.coffee && propriedade == "origin") {
-      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
-    } else if (type == ItemType.coffee && propriedade == "variety") {
-      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
-    } else if (type == ItemType.nation && propriedade == "nationality") {
-      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
-    } else if (type == ItemType.nation && propriedade == "capital") {
-      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
-    } else if (type == ItemType.nation && propriedade == "language") {
-      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
-    }else if (type == ItemType.nation && propriedade == "national_sport") {
-      objetosOrdenados = ord.ordenarItens(objetos, propriedade);
-    } else {
-      print("vish");
-    }
+    objetosOrdenados = ord.ordenarItens(objetos, propriedade);
     emitirEstadoOrdenado(objetosOrdenados, propriedade);
   }
 
@@ -119,15 +91,10 @@ class DataService {
   }
 
   void emitirEstadoOrdenado(List objetosOrdenados, String propriedade) {
-    // var estado = tableStateNotifier.value;
     var estado = Map<String, dynamic>.from(tableStateNotifier.value);
-
     estado['dataObjects'] = objetosOrdenados;
-
     estado['sortCriteria'] = propriedade;
-
     estado['ascending'] = true;
-
     tableStateNotifier.value = estado;
   }
 
@@ -156,18 +123,14 @@ class DataService {
       tableStateNotifier.value['itemType'] != type;
 
   void carregarPorTipo(ItemType type) async {
-    //ignorar solicitação se uma requisição já estiver em curso
-
     if (temRequisicaoEmCurso()) return;
-
+    
     if (mudouTipoDeItemRequisitado(type)) {
       emitirEstadoCarregando(type);
     }
-
+    
     var uri = montarUri(type);
-
     var json = await acessarApi(uri); //, type);
-
     emitirEstadoPronto(type, json);
   }
 }
