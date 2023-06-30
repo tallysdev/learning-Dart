@@ -1,26 +1,22 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../data/data_service.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // List itens = dataService.getvaluesofItens;
     return MaterialApp(
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(title: const Text("Dicas"), actions: [
             PopupMenuButton(
-              itemBuilder: (_) => [1,2,3,4]
+              itemBuilder: (_) => [1, 2, 3, 4]
                   .map((num) => PopupMenuItem(
                         value: num,
                         child: Text("Carregar $num itens por vez"),
                       ))
                   .toList(),
-              // onSelected: (number) {
-              //   dataService.numberOfItens = number;
-              // },
             )
           ]),
           body: ValueListenableBuilder(
@@ -43,7 +39,6 @@ class MyApp extends StatelessWidget {
                   case TableStatus.error:
                     return const Text("Lascou");
                 }
-
                 return const Text("...");
               }),
           bottomNavigationBar:
@@ -54,14 +49,11 @@ class MyApp extends StatelessWidget {
 
 class NewNavBar extends HookWidget {
   final _itemSelectedCallback;
-
   NewNavBar({itemSelectedCallback})
       : _itemSelectedCallback = itemSelectedCallback ?? (int) {}
-
   @override
   Widget build(BuildContext context) {
     var state = useState(1);
-
     return BottomNavigationBar(
         onTap: (index) {
           state.value = index;
@@ -83,17 +75,9 @@ class NewNavBar extends HookWidget {
 }
 
 class DataTableWidget extends StatelessWidget {
-
-
-
   final List jsonObjects;
-
   final List<String> columnNames;
-
   final List<String> propertyNames;
-
-
-
   DataTableWidget(
       {this.jsonObjects = const [],
       this.columnNames = const [],
