@@ -1,113 +1,36 @@
 class Ordenador {
-  List ordenarCervejasPorNomeCrescente(List cervejas) {
-    List cervejasOrdenadas = List.of(cervejas);
-
-    bool trocouAoMenosUm;
-
+  List ordenarItens(List itens, String propriedade, [bool sentido = true]) {
+    List itensOrdenados = List.of(itens);
+    bool trocouAuMenosUm;
     do {
-      trocouAoMenosUm = false;
-
-      for (int i = 0; i < cervejasOrdenadas.length - 1; i++) {
-        var atual = cervejasOrdenadas[i];
-
-        var proximo = cervejasOrdenadas[i + 1];
-
-        if (atual["name"].compareTo(proximo["name"]) > 0) {
-          var aux = cervejasOrdenadas[i];
-
-          cervejasOrdenadas[i] = cervejasOrdenadas[i + 1];
-
-          cervejasOrdenadas[i + 1] = aux;
-
-          trocouAoMenosUm = true;
+      trocouAuMenosUm = false;
+      if (!sentido) {
+        // print(itensOrdenados.length);
+        for (int i = 0; i < itensOrdenados.length - 1; i++) {
+          var prox = itensOrdenados[i];
+          var atual = itensOrdenados[i + 1];
+          if (atual[propriedade].compareTo(prox[propriedade]) > 0) {
+            var aux = itensOrdenados[i];
+            itensOrdenados[i] = itensOrdenados[i + 1];
+            itensOrdenados[i + 1] = aux;
+            trocouAuMenosUm = true;
+          }
+        }
+      } else {
+        // print(itensOrdenados.length);
+        for (int i = 0; i < itensOrdenados.length - 1; i++) {
+          // print(i);
+          var atual = itensOrdenados[i];
+          var prox = itensOrdenados[i + 1];
+          if (atual[propriedade].compareTo(prox[propriedade]) > 0) {
+            var aux = itensOrdenados[i];
+            itensOrdenados[i] = itensOrdenados[i + 1];
+            itensOrdenados[i + 1] = aux;
+            trocouAuMenosUm = true;
+          }
         }
       }
-    } while (trocouAoMenosUm);
-
-    return cervejasOrdenadas;
-  }
-
-  List ordenarCervejasPorNomeDecrescente(List cervejas) {
-    List cervejasOrdenadas = List.of(cervejas);
-
-    bool trocouAoMenosUm;
-
-    do {
-      trocouAoMenosUm = false;
-
-      for (int i = 0; i < cervejasOrdenadas.length - 1; i++) {
-        var atual = cervejasOrdenadas[i];
-
-        var proximo = cervejasOrdenadas[i + 1];
-
-        if (atual["name"].compareTo(proximo["name"]) > 0) {
-          var aux = cervejasOrdenadas[i];
-
-          cervejasOrdenadas[i] = cervejasOrdenadas[i + 1];
-
-          cervejasOrdenadas[i + 1] = aux;
-
-          trocouAoMenosUm = true;
-        }
-      }
-    } while (trocouAoMenosUm);
-
-    return cervejasOrdenadas;
-  }
-
-  List ordenarCervejasPorEstiloCrescente(List cervejas) {
-    List cervejasOrdenadas = List.of(cervejas);
-
-    bool trocouAoMenosUm;
-
-    do {
-      trocouAoMenosUm = false;
-
-      for (int i = 0; i < cervejasOrdenadas.length - 1; i++) {
-        var atual = cervejasOrdenadas[i];
-
-        var proximo = cervejasOrdenadas[i + 1];
-
-        if (atual["style"].compareTo(proximo["style"]) > 0) {
-          var aux = cervejasOrdenadas[i];
-
-          cervejasOrdenadas[i] = cervejasOrdenadas[i + 1];
-
-          cervejasOrdenadas[i + 1] = aux;
-
-          trocouAoMenosUm = true;
-        }
-      }
-    } while (trocouAoMenosUm);
-
-    return cervejasOrdenadas;
-  }
-
-  List ordenarCervejasPorEstiloDecrescente(List cervejas) {
-    List cervejasOrdenadas = List.of(cervejas);
-
-    bool trocouAoMenosUm;
-
-    do {
-      trocouAoMenosUm = false;
-
-      for (int i = 0; i < cervejasOrdenadas.length - 1; i++) {
-        var atual = cervejasOrdenadas[i];
-
-        var proximo = cervejasOrdenadas[i + 1];
-
-        if (atual["style"].compareTo(proximo["style"]) > 0) {
-          var aux = cervejasOrdenadas[i];
-
-          cervejasOrdenadas[i] = cervejasOrdenadas[i + 1];
-
-          cervejasOrdenadas[i + 1] = aux;
-
-          trocouAoMenosUm = true;
-        }
-      }
-    } while (trocouAoMenosUm);
-
-    return cervejasOrdenadas;
+    } while (trocouAuMenosUm);
+    return itensOrdenados;
   }
 }
