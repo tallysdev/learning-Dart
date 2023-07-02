@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
@@ -34,6 +33,27 @@ enum ItemType {
               : [];
 }
 
+class Ordenacao extends Decididor {
+  final String propriedade;
+
+  final bool crescente;
+
+  Ordenacao(this.propriedade, [this.crescente = true]);
+
+  @override
+  bool precisaTrocarAtualPeloProximo(atual, proximo) {
+    try {
+      final ordemCorreta = crescente ? [atual, proximo] : [proximo, atual];
+
+      return ordemCorreta[0][propriedade]
+              .compareTo(ordemCorreta[1][propriedade]) >
+          0;
+    } catch (error) {
+      return false;
+    }
+  }
+}
+
 class DataService {
   static const MAX_N_ITEMS = 15;
 
@@ -63,12 +83,17 @@ class DataService {
     carregarPorTipo(params[index]);
   }
 
-  void ordenarEstadoAtual(String propriedade) {
+  void ordenarEstadoAtual(final String propriedade) {
     List objetos = tableStateNotifier.value['dataObjects'] ?? [];
+
     if (objetos == []) return;
+
     Ordenador ord = Ordenador();
-    var objetosOrdenados = [];
-    objetosOrdenados = ord.ordenarItens(objetos, propriedade);
+
+    Decididor d = Ordenacao(propriedade);
+
+    var objetosOrdenados = ord.ordenarItens(objetos, d);
+
     emitirEstadoOrdenado(objetosOrdenados, propriedade);
   }
 
