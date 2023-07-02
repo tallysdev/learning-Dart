@@ -1,5 +1,5 @@
 class Ordenador {
-  List ordenarItens(List itens, String propriedade, [bool sentido = true]) {
+  List ordenarItens(List itens, Decididor decididor, [bool sentido = true]) {
     List itensOrdenados = List.of(itens);
     bool trocouAuMenosUm;
     do {
@@ -9,23 +9,18 @@ class Ordenador {
         var atual = itensOrdenados[i];
         var prox = itensOrdenados[i + 1];
 
-        if (sentido) {
-          if (atual[propriedade].compareTo(prox[propriedade]) > 0) {
-            var aux = itensOrdenados[i];
-            itensOrdenados[i] = itensOrdenados[i + 1];
-            itensOrdenados[i + 1] = aux;
-            trocouAuMenosUm = true;
-          }
-        } else {
-          if (prox[propriedade].compareTo(atual[propriedade]) > 0) {
-            var aux = itensOrdenados[i];
-            itensOrdenados[i] = itensOrdenados[i + 1];
-            itensOrdenados[i + 1] = aux;
-            trocouAuMenosUm = true;
-          }
+        if (decididor.precisaTrocarAtualPeloProximo(atual, prox)) {
+          var aux = itensOrdenados[i];
+          itensOrdenados[i] = itensOrdenados[i + 1];
+          itensOrdenados[i + 1] = aux;
+          trocouAuMenosUm = true;
         }
       }
     } while (trocouAuMenosUm);
     return itensOrdenados;
   }
+}
+
+abstract class Decididor {
+  bool precisaTrocarAtualPeloProximo(dynamic atual, dynamic proximo);
 }
