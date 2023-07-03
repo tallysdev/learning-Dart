@@ -9,28 +9,38 @@ import '../util/ordenador.dart';
 enum TableStatus { idle, loading, ready, error }
 
 enum ItemType {
-  beer,
-  coffee,
-  nation,
+  color,
+  vehicle,
+  cannabis,
+  crypto_coin,
+  dessert,
   none;
 
-  String get asString => '$name';
+  String get asString => name;
 
-  List<String> get columns => this == coffee
-      ? ["Nome", "Origem", "Tipo"]
-      : this == beer
-          ? ["Nome", "Estilo", "IBU"]
-          : this == nation
-              ? ["Nome", "Capital", "Idioma", "Esporte"]
-              : [];
+  List<String> get columns => this == color
+      ? ["Nome", "Hex_value", "Hsl_value"]
+      : this == vehicle
+          ? ["Make_and_model", "Color", "Mileage"]
+          : this == cannabis
+              ? ["Variedade", "canabinóide", "Uso medicinal"]
+              : this == crypto_coin
+                  ? ["Nome", "acrônimo", "Logo"]
+                  : this == dessert
+                      ? ["variedade", "cobertura", "sabor"]
+                      : [];
 
-  List<String> get properties => this == coffee
-      ? ["blend_name", "origin", "variety"]
-      : this == beer
-          ? ["name", "style", "ibu"]
-          : this == nation
-              ? ["nationality", "capital", "language", "national_sport"]
-              : [];
+  List<String> get properties => this == color
+      ? ["color_name", "hex_value", "hsl_value"]
+      : this == vehicle
+          ? ["make_and_model", "color", "mileage"]
+          : this == cannabis
+              ? ["strain", "cannabinoid", "medical_use"]
+              : this == crypto_coin
+                  ? ["coin_name", "acronym", "logo"]
+                  : this == dessert
+                      ? ["variety", "topping", "flavor"]
+                      : [];
 }
 
 class Ordenacao extends Decididor {
@@ -78,7 +88,7 @@ class DataService {
   });
 
   void carregar(index) {
-    final params = [ItemType.coffee, ItemType.beer, ItemType.nation];
+    final params = [ItemType.color, ItemType.vehicle, ItemType.cannabis, ItemType.crypto_coin,ItemType.dessert ];
 
     carregarPorTipo(params[index]);
   }
@@ -149,11 +159,11 @@ class DataService {
 
   void carregarPorTipo(ItemType type) async {
     if (temRequisicaoEmCurso()) return;
-    
+
     if (mudouTipoDeItemRequisitado(type)) {
       emitirEstadoCarregando(type);
     }
-    
+
     var uri = montarUri(type);
     var json = await acessarApi(uri); //, type);
     emitirEstadoPronto(type, json);
