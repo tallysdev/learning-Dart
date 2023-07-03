@@ -93,17 +93,14 @@ class DataService {
     carregarPorTipo(params[index]);
   }
 
-  void ordenarEstadoAtual(final String propriedade) {
+  void ordenarEstadoAtual(final String propriedade, [bool crescente=true]) {
     List objetos = tableStateNotifier.value['dataObjects'] ?? [];
 
     if (objetos == []) return;
 
     Ordenador ord = Ordenador();
-
-    Decididor d = Ordenacao(propriedade);
-
+    Decididor d = Ordenacao(propriedade, crescente);
     var objetosOrdenados = ord.ordenarItens(objetos, d);
-
     emitirEstadoOrdenado(objetosOrdenados, propriedade);
   }
 
