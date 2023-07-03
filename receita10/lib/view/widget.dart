@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
                         child: DataTableWidget(
                             jsonObjects: value['dataObjects'],
                             propertyNames: value['propertyNames'],
-                            columnNames: value['columnNames']));
+                            columnNames: value['columnNames'],
+                            sortCallback: dataService.ordenarEstadoAtual
+                            ));
 
                   case TableStatus.error:
                     return const Text("Lascou");
@@ -82,21 +84,26 @@ class NewNavBar extends HookWidget {
   // dessert,
 }
 
+void _empty(String,bool){}
 class DataTableWidget extends StatelessWidget {
+  final _sortCallback;
   final List jsonObjects;
   final List<String> columnNames;
   final List<String> propertyNames;
   DataTableWidget(
       {this.jsonObjects = const [],
       this.columnNames = const [],
-      this.propertyNames = const []});
+      this.propertyNames = const [],
+      sortCallback})
+      : _sortCallback = sortCallback ?? _empty ;
+
   @override
   Widget build(BuildContext context) {
     return DataTable(
         columns: columnNames
             .map((name) => DataColumn(
                 onSort: (columnIndex, ascending) =>
-                    dataService.ordenarEstadoAtual(propertyNames[columnIndex]),
+                    _sortCallback(propertyNames[columnIndex],ascending),
                 label: Expanded(
                     child: Text(name,
                         style: const TextStyle(fontStyle: FontStyle.italic)))))
