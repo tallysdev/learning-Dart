@@ -4,11 +4,9 @@ class Ordenador {
     bool trocouAuMenosUm;
     do {
       trocouAuMenosUm = false;
-
       for (int i = 0; i < itensOrdenados.length - 1; i++) {
         var atual = itensOrdenados[i];
         var prox = itensOrdenados[i + 1];
-
         if (decididor.precisaTrocarAtualPeloProximo(atual, prox)) {
           var aux = itensOrdenados[i];
           itensOrdenados[i] = itensOrdenados[i + 1];
