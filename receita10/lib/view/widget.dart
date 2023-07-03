@@ -55,6 +55,8 @@ class NewNavBar extends HookWidget {
   Widget build(BuildContext context) {
     var state = useState(1);
     return BottomNavigationBar(
+        type: BottomNavigationBarType
+          .fixed,
         onTap: (index) {
           state.value = index;
 
@@ -63,15 +65,21 @@ class NewNavBar extends HookWidget {
         currentIndex: state.value,
         items: const [
           BottomNavigationBarItem(
-            label: "Cafés",
-            icon: Icon(Icons.coffee_outlined),
+            label: "Cor",
+            icon: Icon(Icons.color_lens_outlined),
           ),
           BottomNavigationBarItem(
-              label: "Cervejas", icon: Icon(Icons.local_drink_outlined)),
+              label: "Veículos", icon: Icon(Icons.car_repair)),
           BottomNavigationBarItem(
-              label: "Nações", icon: Icon(Icons.flag_outlined))
+              label: "Cannabis", icon: Icon(Icons.energy_savings_leaf_outlined)),
+              BottomNavigationBarItem(
+              label: "Moeda Digital", icon: Icon(Icons.attach_money_outlined)),
+              BottomNavigationBarItem(
+              label: "Sobremesas", icon: Icon(Icons.fastfood_outlined))
         ]);
   }
+  // crypto_coin,
+  // dessert,
 }
 
 class DataTableWidget extends StatelessWidget {
@@ -96,7 +104,7 @@ class DataTableWidget extends StatelessWidget {
         rows: jsonObjects
             .map((obj) => DataRow(
                 cells: propertyNames
-                    .map((propName) => DataCell(Text(obj[propName])))
+                    .map((propName) => DataCell(Text('${obj[propName]}')))
                     .toList()))
             .toList());
   }
