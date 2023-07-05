@@ -9,16 +9,19 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          appBar: AppBar(title: const Text("Dicas"), actions: [
-            PopupMenuButton(
-              itemBuilder: (_) => [1, 2, 3, 4]
-                  .map((num) => PopupMenuItem(
-                        value: num,
-                        child: Text("Carregar $num itens por vez"),
-                      ))
-                  .toList(),
-            )
-          ]),
+          appBar: AppBar(
+            title: const Text("Dicas"),
+            actions: [
+              PopupMenuButton(
+                itemBuilder: (_) => [1, 2, 3, 4]
+                    .map((num) => PopupMenuItem(
+                          value: num,
+                          child: Text("Carregar $num itens por vez"),
+                        ))
+                    .toList(),
+              )
+            ],
+          ),
           body: ValueListenableBuilder(
               valueListenable: dataService.tableStateNotifier,
               builder: (_, value, __) {
@@ -35,8 +38,7 @@ class MyApp extends StatelessWidget {
                             jsonObjects: value['dataObjects'],
                             propertyNames: value['propertyNames'],
                             columnNames: value['columnNames'],
-                            sortCallback: dataService.ordenarEstadoAtual
-                            ));
+                            sortCallback: dataService.ordenarEstadoAtual));
 
                   case TableStatus.error:
                     return const Text("Lascou");
@@ -57,8 +59,7 @@ class NewNavBar extends HookWidget {
   Widget build(BuildContext context) {
     var state = useState(1);
     return BottomNavigationBar(
-        type: BottomNavigationBarType
-          .fixed,
+        type: BottomNavigationBarType.fixed,
         onTap: (index) {
           state.value = index;
 
@@ -73,10 +74,11 @@ class NewNavBar extends HookWidget {
           BottomNavigationBarItem(
               label: "Veículos", icon: Icon(Icons.car_repair)),
           BottomNavigationBarItem(
-              label: "Cannabis", icon: Icon(Icons.energy_savings_leaf_outlined)),
-              BottomNavigationBarItem(
+              label: "Cannabis",
+              icon: Icon(Icons.energy_savings_leaf_outlined)),
+          BottomNavigationBarItem(
               label: "Moeda Digital", icon: Icon(Icons.attach_money_outlined)),
-              BottomNavigationBarItem(
+          BottomNavigationBarItem(
               label: "Sobremesas", icon: Icon(Icons.fastfood_outlined))
         ]);
   }
@@ -84,8 +86,9 @@ class NewNavBar extends HookWidget {
   // dessert,
 }
 
-void _empty(String,bool){}
-class DataTableWidget extends StatelessWidget {
+void _empty(String, bool) {}
+
+class DataTableWidget extends HookWidget {
   final _sortCallback;
   final List jsonObjects;
   final List<String> columnNames;
@@ -95,15 +98,29 @@ class DataTableWidget extends StatelessWidget {
       this.columnNames = const [],
       this.propertyNames = const [],
       sortCallback})
-      : _sortCallback = sortCallback ?? _empty ;
-
+      : _sortCallback = sortCallback ?? _empty;
+  String hl = "12";
   @override
   Widget build(BuildContext context) {
+    final sortAscending =
+        useState<List<bool>>(List<bool>.filled(columnNames.length, true));
+
+    void onSort(int columnIndex, bool ascending) {
+      sortAscending.value = List<bool>.from(sortAscending.value);
+      if (sortAscending.value[columnIndex] == ascending) {
+        sortAscending.value[columnIndex] = !ascending;
+      } else {
+        sortAscending.value[columnIndex] = ascending;
+      }
+      _sortCallback(
+          propertyNames[columnIndex], sortAscending.value[columnIndex]);
+    }
+
     return DataTable(
         columns: columnNames
             .map((name) => DataColumn(
                 onSort: (columnIndex, ascending) =>
-                    _sortCallback(propertyNames[columnIndex],ascending),
+                    onSort(columnIndex, ascending),
                 label: Expanded(
                     child: Text(name,
                         style: const TextStyle(fontStyle: FontStyle.italic)))))
@@ -116,5 +133,3 @@ class DataTableWidget extends StatelessWidget {
             .toList());
   }
 }
-
-// codigo base proposto pelo professor fabricio na receita 9
