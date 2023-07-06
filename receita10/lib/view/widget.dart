@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import '../data/data_service.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -100,6 +102,7 @@ class DataTableWidget extends HookWidget {
       sortCallback})
       : _sortCallback = sortCallback ?? _empty;
   String hl = "12";
+
   @override
   Widget build(BuildContext context) {
     final sortAscending =
@@ -119,11 +122,20 @@ class DataTableWidget extends HookWidget {
     return DataTable(
         columns: columnNames
             .map((name) => DataColumn(
-                onSort: (columnIndex, ascending) =>
-                    onSort(columnIndex, ascending),
+                onSort: (columnIndex, ascending) {
+                  onSort(columnIndex, ascending);
+                },
                 label: Expanded(
-                    child: Text(name,
-                        style: const TextStyle(fontStyle: FontStyle.italic)))))
+                    child: Row(children: [
+                  Text(name,
+                      style: const TextStyle(fontStyle: FontStyle.italic)),
+                  if (sortAscending.value[columnNames.indexOf(name)] != null)
+                  Icon(
+                      sortAscending.value[columnNames.indexOf(name)]
+                          ? Icons.arrow_downward
+                          : Icons.arrow_upward,
+                      size: 16)
+                ]))))
             .toList(),
         rows: jsonObjects
             .map((obj) => DataRow(
